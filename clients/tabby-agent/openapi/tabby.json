@@ -8,7 +8,7 @@
   },
   "servers": [{ "url": "/", "description": "Server" }],
   "paths": {
-    "/v1/completions": {
+    "/invocations": {
       "post": {
         "tags": ["v1"],
         "operationId": "completion",
