@@ -68,7 +68,7 @@ async fn make_completion_route(args: &WorkerArgs) -> Router {
     request_register(WorkerKind::Completion, args).await;
 
     Router::new().route(
-        "/v1/completions",
+        "/invocations",
         routing::post(routes::completions).with_state(state),
     )
 }

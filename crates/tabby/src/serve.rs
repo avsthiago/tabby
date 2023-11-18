@@ -164,11 +164,11 @@ async fn api_router(args: &ServeArgs, config: &Config) -> Router {
                 routing::post(routes::log_event).with_state(logger),
             )
             .route(
-                "/v1/health",
+                "/ping",
                 routing::post(routes::health).with_state(health_state.clone()),
             )
             .route(
-                "/v1/health",
+                "/ping",
                 routing::get(routes::health).with_state(health_state),
             )
     });
@@ -176,7 +176,7 @@ async fn api_router(args: &ServeArgs, config: &Config) -> Router {
     routers.push({
         Router::new()
             .route(
-                "/v1/completions",
+                "/invocations",
                 routing::post(routes::completions).with_state(completion),
             )
             .layer(TimeoutLayer::new(Duration::from_secs(

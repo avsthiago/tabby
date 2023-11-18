@@ -16,7 +16,7 @@
     }
   ],
   "paths": {
-    "/v1/completions": {
+    "/invocations": {
       "post": {
         "tags": [
           "v1"
@@ -75,7 +75,7 @@
         }
       }
     },
-    "/v1/health": {
+    "/ping": {
       "get": {
         "tags": [
           "v1"

@@ -8,7 +8,7 @@ use crate::services::completion::{CompletionRequest, CompletionResponse, Complet
 
 #[utoipa::path(
     post,
-    path = "/v1/completions",
+    path = "/invocations",
     request_body = CompletionRequest,
     operation_id = "completion",
     tag = "v1",

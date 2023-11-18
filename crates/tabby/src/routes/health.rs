@@ -6,7 +6,7 @@ use crate::services::health;
 
 #[utoipa::path(
     get,
-    path = "/v1/health",
+    path = "/ping",
     tag = "v1",
     responses(
         (status = 200, description = "Success", body = HealthState, content_type = "application/json"),
