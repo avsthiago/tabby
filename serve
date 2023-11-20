@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Get the bucket name from an environment variable
+BUCKET_NAME=$S3_BUCKET_NAME
+
+# Check if the bucket name is set
+if [ -z "$BUCKET_NAME" ]; then
+    echo "Error: S3_BUCKET_NAME environment variable is not set."
+    exit 1
+fi
+
+# Download model artifacts from S3
+echo "Creating data directory"
+mkdir -p /data
+echo "Downloading model from S3"
+aws s3 sync s3://${BUCKET_NAME}/tabby/ /data
+
+# Start the Tabby server
+/opt/tabby/bin/tabby serve --model TabbyML/StarCoder-1B --device cpu

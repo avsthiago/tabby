@@ -42,9 +42,17 @@ FROM ${BASE_CUDA_RUN_CONTAINER} as runtime
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
+        unzip \
+        curl \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip ./aws
 
 # Disable safe directory in docker
 # Context: https://github.com/git/git/commit/8959555cee7ec045958f9b6dd62e541affb7e7d9
@@ -57,6 +65,12 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
 
 COPY --from=build /opt/tabby /opt/tabby
 
-ENV TABBY_ROOT=/data
+COPY serve /opt/program/serve
+RUN chmod +x /opt/program/serve
 
-ENTRYPOINT ["/opt/tabby/bin/tabby"]
+WORKDIR /opt/program
+
+ENV TABBY_ROOT=/data
+ENV TABBY_DISABLE_USAGE_COLLECTION=1
+
+ENTRYPOINT ["/opt/program/serve"]
